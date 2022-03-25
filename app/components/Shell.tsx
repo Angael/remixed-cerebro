@@ -13,14 +13,11 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { version } from '../../package.json';
-import { NavLink, useMatches } from 'remix';
 import NavLinkButton from '~/components/NavLinkButton';
 
 function Shell({ children }: React.PropsWithChildren<any>) {
   const [opened, setOpened] = useState(false);
-  const matches = useMatches();
   const theme = useMantineTheme();
-  console.log({ matches });
 
   return (
     <AppShell
