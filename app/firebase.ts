@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+// import { getAnalytics } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
+import { Analytics, getAnalytics } from 'firebase/analytics';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_KEY,
@@ -14,4 +15,3 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const analytics = getAnalytics(app);

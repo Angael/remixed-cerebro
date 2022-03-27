@@ -1,20 +1,33 @@
 import {
+  json,
   Links,
   LiveReload,
+  LoaderFunction,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from 'remix';
 import type { MetaFunction } from 'remix';
 import { MantineProvider, Global } from '@mantine/core';
-import Shell from '~/components/Shell';
+import Shell from '~/components/shell/Shell';
+import Analytics from '~/Analytics';
+import { getAuth } from '~/loaders/isLoggedIn';
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const auth = await getAuth(request);
+  console.log({ auth });
+  return json(auth.isLoggedIn);
+};
 
 export const meta: MetaFunction = () => {
   return { title: 'Cerebro' };
 };
 
 export default function App() {
+  const isLoggedIn = useLoaderData();
+
   return (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
       <Global
@@ -41,9 +54,11 @@ export default function App() {
           <meta name='viewport' content='width=device-width,initial-scale=1' />
           <Meta />
           <Links />
+
+          <Analytics />
         </head>
         <body>
-          <Shell>
+          <Shell isLoggedIn={isLoggedIn}>
             <Outlet />
           </Shell>
           <ScrollRestoration />

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
+  Anchor,
   AppShell,
   Box,
   Burger,
-  Button,
   Card,
   Group,
   Header,
@@ -12,36 +12,51 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core';
-import { version } from '../../package.json';
-import NavLinkButton from '~/components/NavLinkButton';
 
-function Shell({ children }: React.PropsWithChildren<any>) {
+import { version } from '../../../package.json';
+import NavLinkButton from '~/components/NavLinkButton';
+import { Link } from 'remix';
+import LoginCard from '~/components/shell/LoginCard';
+
+function Shell({
+  isLoggedIn,
+  children,
+}: React.PropsWithChildren<{ isLoggedIn: boolean }>) {
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
+
+  console.log('test', isLoggedIn);
 
   return (
     <AppShell
       fixed
       padding='md'
       navbar={
-        <Navbar
-          width={{ sm: 300, lg: 400 }}
-          hiddenBreakpoint='sm'
-          hidden={!opened}
-        >
-          <Card>User: Angeal98</Card>
+        <Navbar width={{ sm: 300 }} hiddenBreakpoint='sm' hidden={!opened}>
           <Box
-            p='xs'
-            sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              height: '100%',
+            }}
           >
-            <NavLinkButton to='/'>Home</NavLinkButton>
-            <NavLinkButton to='/posts'>Posts</NavLinkButton>
+            <Box
+              p='xs'
+              sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+            >
+              <NavLinkButton to='/'>Home</NavLinkButton>
+              <NavLinkButton to='/posts'>Posts</NavLinkButton>
+              <NavLinkButton to='/files'>Files</NavLinkButton>
+              <NavLinkButton to='/settings'>Settings</NavLinkButton>
+            </Box>
+            <LoginCard isLoggedIn={isLoggedIn} />
           </Box>
         </Navbar>
       }
       header={
         <Header height={60} p='xs'>
-          <Group position='apart'>
+          <Group position='apart' sx={{ height: '100%' }}>
             <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
@@ -51,7 +66,7 @@ function Shell({ children }: React.PropsWithChildren<any>) {
                 mr='xl'
               />
             </MediaQuery>
-            <Text size='xl'>Cerebro v{version}</Text>
+            <Text size='xl'>Krzysztof Widacki v{version}</Text>
           </Group>
         </Header>
       }

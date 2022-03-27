@@ -34,7 +34,7 @@ export default function Posts() {
       <Title mb='lg'>Posts</Title>
       <SimpleGrid cols={3}>
         {posts.map((p) => (
-          <Card shadow='sm' p='lg'>
+          <Card shadow='sm' p='lg' key={p.id}>
             <Text>{p.title}</Text>
             <Button
               variant='light'
